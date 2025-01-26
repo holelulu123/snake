@@ -9,9 +9,10 @@ using namespace std;
 
 
 vector<complex<int>> snake_movement(vector<complex<int>> snake, int direction);
-vector<complex<int>> snake_eat_apple(vector<complex<int>>snake , int apple_row, int apple_col);
 vector<complex<int>> increase_snake(vector<complex<int>> snake, int direction);
+vector<vector<int>> snake_on_matrix(vector<complex<int>> snake, vector<vector<int>> matrix);
 
+bool check_eat_apple(vector<complex<int>>snake , int apple_row, int apple_col);
 bool check_snake_limit(vector<complex<int>> snake, int rows, int cols);
 bool check_snake_eat_himself(vector<complex<int>> snake);
 

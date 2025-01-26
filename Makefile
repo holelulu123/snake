@@ -1,33 +1,20 @@
-# Compiler
-CXX = g++
+CXX=g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -g -O2
 
-# Compiler flags
-CXXFLAGS = -Wall -g
+build/main: build/tile.o build/snake.o build/apple.o build/keyboard.o
+	$(CXX) $(CXXFLAGS) build/keyboard.o build/tile.o build/apple.o build/snake.o -o build/main -lncurses 	
 
-# Target executable
-TARGET = main
+build/tile.o: src/tile.cpp 
+	$(CXX) $(CXXFLAGS) -c src/tile.cpp -o build/tile.o
 
-# Source files
-SRCS = src/apple.cpp src/snake.cpp src/tile.cpp
+build/snake.o: src/snake.cpp include/snake.h
+	$(CXX) $(CXXFLAGS) -c src/snake.cpp -o build/snake.o
 
-# Object files
-OBJS = $(SRCS:.cpp=.o)
+build/apple.o: src/apple.cpp include/apple.h
+	$(CXX) $(CXXFLAGS) -c src/apple.cpp -o build/apple.o
 
-# Default rule to build and run the executable
-all: $(TARGET) run
+build/keyboard.o: src/keyboard.cpp include/keyboard.h
+	$(CXX) $(CXXFLAGS) -c src/keyboard.cpp -I include/ -o build/keyboard.o -lncurses
 
-# Rule to link object files into the target executable
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
-
-# Rule to compile .cpp files into .o files
-build/%.o: src/%.cpp
-	$(CXX) $(CXXFLAGS) -c %< -o %@
-
-# Rule to run the executable
-run: $(TARGET)
-	$(TARGET)
-
-# Clean rule to remove generated files
 clean:
-	del $(TARGET_DEL) $(OBJS)
+	rm -f build/*
